@@ -3,7 +3,7 @@ defmodule Langue.User do
 
   schema "users" do
     field :name, :string
-    field :password, :string
+    field :password, :string, virtual: true
     field :encrypted_password, :string
     field :email, :string
 
