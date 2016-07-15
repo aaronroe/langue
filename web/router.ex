@@ -13,6 +13,12 @@ defmodule Langue.Router do
     plug :accepts, ["json"]
   end
 
+  pipeline :api_auth do
+    plug Guardian.Plug.VerifyHeader, realm: "Bearer"
+    plug Guardian.Plug.LoadResource
+    plug Guardian.Plug.EnsureAuthenticated, handler: Langue.AuthController
+  end
+
   scope "/", Langue do
     pipe_through :browser # Use the default browser stack
 
@@ -20,7 +26,7 @@ defmodule Langue.Router do
   end
 
   scope "/api", Langue do
-    pipe_through :api
+    pipe_through [:api, :api_auth]
 
     resources "/users", UserController, except: [:new, :edit]
   end
