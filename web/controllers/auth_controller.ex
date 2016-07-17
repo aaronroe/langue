@@ -14,7 +14,7 @@ defmodule Langue.AuthController do
     |> render("error.json", message: "Authentication required")
   end
 
-  def identity_callback(%{assigns: %{ueberauth_auth: %Auth{provider: :identity, uid: email, credentials: %Credentials{other: %{password: password}}}}} = conn, params) do
+  def identity_callback(%{assigns: %{ueberauth_auth: %Auth{provider: :identity, uid: email, credentials: %Credentials{other: %{password: password}}}}} = conn, _params) do
     user = Repo.get_by(User, email: String.downcase(email))
     case User.validate_login(user, password) do
       :ok ->
@@ -27,7 +27,8 @@ defmodule Langue.AuthController do
        |> put_resp_header("Authorization", "Bearer #{jwt}")
        |> put_resp_header("X-Expires", Integer.to_string(exp))
        |> put_flash(:info, "you did it, dawg!")
-       |> redirect(to: "/")
+       |> put_view(Langue.PageView)
+       |> render("index.html")
       :error ->
         conn
         |> put_status(401)
