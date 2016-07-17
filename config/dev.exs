@@ -47,5 +47,5 @@ config :guardian, Guardian,
   issuer: "Langue",
   ttl: { 30, :days },
   verify_issuer: true, # optional
-  secret_key: 'not so secret secret',
+  secret_key: "not so secret secret",
   serializer: Langue.GuardianSerializer

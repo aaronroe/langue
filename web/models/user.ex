@@ -1,8 +1,6 @@
 defmodule Langue.User do
   use Langue.Web, :model
 
-  alias Ueberauth.Auth
-
   schema "users" do
     field :name, :string
     field :password, :string, virtual: true
@@ -30,8 +28,14 @@ defmodule Langue.User do
     |> put_change(:encrypted_password, hash_password(params["password"]))
   end
 
-  def validate_login(%Auth{provider: :identity} = auth) do
-    {:ok, %{}}
+  def validate_login(user, password) do
+    case user do
+      nil -> :error
+      _ -> case Comeonin.Bcrypt.checkpw(password, user.encrypted_password) do
+        true -> :ok
+        false -> :error
+      end
+    end
   end
 
   defp hash_password(password) do
