@@ -1,6 +1,8 @@
 defmodule Langue.User do
   use Langue.Web, :model
 
+  alias Ueberauth.Auth
+
   schema "users" do
     field :name, :string
     field :password, :string, virtual: true
@@ -22,5 +24,17 @@ defmodule Langue.User do
   def changeset(model, params \\ :empty) do
     model
     |> cast(params, @required_fields, @optional_fields)
+    |> unique_constraint(:email)
+    |> validate_format(:email, ~r/@/)
+    |> validate_length(:password, min: 8)
+    |> put_change(:encrypted_password, hash_password(params["password"]))
+  end
+
+  def validate_login(%Auth{provider: :identity} = auth) do
+    {:ok, %{}}
+  end
+
+  defp hash_password(password) do
+    Comeonin.Bcrypt.hashpwsalt(password)
   end
 end

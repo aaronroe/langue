@@ -25,9 +25,23 @@ defmodule Langue.Router do
     get "/", PageController, :index
   end
 
+  scope "/auth", Langue do
+    pipe_through :browser
+
+    get "/:provider", AuthController, :request
+    get "/:provider/callback", AuthController, :callback
+    post "/identity/callback", AuthController, :identity_callback
+  end
+
   scope "/api", Langue do
     pipe_through [:api, :api_auth]
 
-    resources "/users", UserController, except: [:new, :edit]
+    resources "/users", UserController, except: [:new, :edit, :create]
+  end
+
+  scope "/api", Langue do
+    pipe_through [:api]
+
+    resources "/users", UserController, only: [:create]
   end
 end
