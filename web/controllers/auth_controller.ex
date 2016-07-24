@@ -24,7 +24,7 @@ defmodule Langue.AuthController do
        exp = Map.get(claims, "exp")
 
        new_conn
-       |> put_resp_cookie("hissingfauna", "#{jwt}")
+       |> put_resp_cookie("tapasha", "#{jwt}")
        |> put_resp_header("X-Expires", Integer.to_string(exp))
        |> put_flash(:info, "you did it, dawg!")
        |> put_view(Langue.PageView)
