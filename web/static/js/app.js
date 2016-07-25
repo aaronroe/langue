@@ -14,12 +14,27 @@
 import 'phoenix_html';
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { Provider } from 'react-redux';
+import { Router, Route, browserHistory } from 'react-router';
+import { syncHistoryWithStore } from 'react-router-redux';
 
 // Import local files
 //
 // Local files can be imported directly using relative
 // paths "./socket" or full ones "web/static/js/socket".
+import configuredStore from './store.js';
+import LangueApp from './containers/LangueApp';
 
 // import socket from "./socket"
 
-ReactDOM.render(<h1>Hello World</h1>, document.getElementById('langue'));
+const store = configuredStore();
+const history = syncHistoryWithStore(browserHistory, store);
+
+ReactDOM.render(
+  <Provider store={store}>
+    <Router history={history}>
+      <Route path="/" component={LangueApp} />
+    </Router>
+  </Provider>,
+  document.getElementById('langue')
+);

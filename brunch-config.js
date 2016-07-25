@@ -77,6 +77,8 @@ exports.config = {
       "redux-thunk",
       "redux-logger",
       "redux-promise",
+      "react-redux",
+      "lodash",
     ]
   }
 };
