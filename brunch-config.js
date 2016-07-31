@@ -52,7 +52,7 @@ exports.config = {
     babel: {
       // Do not use ES6 compiler in vendor code
       ignore: [/web\/static\/vendor/],
-      presets: ['es2015', 'react']
+      presets: ['es2015', 'react', 'stage-2']
     }
   },
 

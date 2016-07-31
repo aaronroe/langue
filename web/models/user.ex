@@ -10,7 +10,7 @@ defmodule Langue.User do
     timestamps
   end
 
-  @required_fields ~w(name password email)
+  @required_fields ~w(password email)
   @optional_fields ~w()
 
   @doc """

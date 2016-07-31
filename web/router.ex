@@ -11,6 +11,8 @@ defmodule Langue.Router do
 
   pipeline :api do
     plug :accepts, ["json"]
+    plug :fetch_session
+    plug :protect_from_forgery
   end
 
   pipeline :api_auth do
