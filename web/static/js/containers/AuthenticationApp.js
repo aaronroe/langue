@@ -2,7 +2,7 @@ import React from 'react';
 
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { FormGroup, ControlLabel, FormControl } from 'react-bootstrap';
+import { FormGroup, ControlLabel, FormControl, HelpBlock } from 'react-bootstrap';
 
 import * as AuthenticationActionCreators from '../actions/authentication';
 
@@ -11,6 +11,22 @@ const defaultState = {
   email: '',
   password: '',
   passwordConfirmation: '',
+  loginValidation: {
+    email: {
+      validationState: null, helpText: null
+    }
+  },
+  registrationValidation: {
+    email: {
+      validationState: null, helpText: null
+    },
+    password: {
+      validationState: null, helpText: null
+    },
+    passwordConfirmation: {
+      validationState: null, helpText: null
+    }
+  }
 };
 
 class AuthenticationApp extends React.Component {
@@ -45,10 +61,49 @@ class AuthenticationApp extends React.Component {
 
   handlePasswordChange(e) {
     this.setState({password: e.target.value});
+
+    if (e.target.value.length < 10) {
+      this.setState({registrationValidation:
+        Object.assign({}, this.state.registrationValidation,
+          {passwordConfirmation: {validationState: null, helpText: null}},
+          {password: {validationState: 'error', helpText: 'Password must be at least 10 characters'}},
+        )
+      });      
+    } else if (this.state.passwordConfirmation !== e.target.value) {
+      this.setState({registrationValidation:
+        Object.assign({}, this.state.registrationValidation,
+          {passwordConfirmation: {validationState: 'error', helpText: 'Passwords do not match'}},
+          {password: {validationState: 'error', helpText: null}},
+        )
+      });
+    } else {
+      this.setState({registrationValidation:
+        Object.assign({}, this.state.registrationValidation,
+          {passwordConfirmation: {validationState: 'success', helpText: 'Passwords match!'}},
+          {password: {validationState: 'success', helpText: null}},
+        )
+      });
+    }
   }
 
   handlePasswordConfirmationChange(e) {
     this.setState({passwordConfirmation: e.target.value});
+
+    if (this.state.password !== e.target.value) {
+      this.setState({registrationValidation:
+        Object.assign({}, this.state.registrationValidation,
+          {passwordConfirmation: {validationState: 'error', helpText: 'Passwords do not match'}},
+          {password: {validationState: 'error', helpText: null}},
+        )
+      });
+    } else {
+      this.setState({registrationValidation:
+        Object.assign({}, this.state.registrationValidation,
+          {passwordConfirmation: {validationState: 'success', helpText: 'Passwords match!'}},
+          {password: {validationState: 'success', helpText: null}},
+        )
+      });
+    }
   }
 
   render() {
@@ -72,17 +127,20 @@ class AuthenticationApp extends React.Component {
       <div>
         <h1>Register</h1>
         <form>
-          <FormGroup controlId="register-email">
+          <FormGroup controlId="register-email" validationState={this.state.registrationValidation.email.validationState}>
             <ControlLabel>Email</ControlLabel>
             <FormControl type="text" placeholder="Enter your email" onChange={this.handleEmailChange} />
+            <HelpBlock>{this.state.registrationValidation.email.helpText}</HelpBlock>
           </FormGroup>
-          <FormGroup controlId="login-password">
+          <FormGroup controlId="login-password" validationState={this.state.registrationValidation.password.validationState}>
             <ControlLabel>Password</ControlLabel>
             <FormControl type="password" placeholder="Enter your desired password" onChange={this.handlePasswordChange} />
+            <HelpBlock>{this.state.registrationValidation.password.helpText}</HelpBlock>
           </FormGroup>
-          <FormGroup controlId="login-password-confirmation">
+          <FormGroup controlId="login-password-confirmation" validationState={this.state.registrationValidation.passwordConfirmation.validationState}>
             <ControlLabel>Confirm Password</ControlLabel>
             <FormControl type="password" placeholder="Confirm your desired password" onChange={this.handlePasswordConfirmationChange} />
+            <HelpBlock>{this.state.registrationValidation.passwordConfirmation.helpText}</HelpBlock>
           </FormGroup>
           <div><button type="button" onClick={this.registerCallback} className="btn btn-default">Submit</button></div>
         </form>
