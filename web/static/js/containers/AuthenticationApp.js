@@ -2,6 +2,7 @@ import React from 'react';
 
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import { FormGroup, ControlLabel, FormControl } from 'react-bootstrap';
 
 import * as AuthenticationActionCreators from '../actions/authentication';
 
@@ -56,8 +57,14 @@ class AuthenticationApp extends React.Component {
       <div>
         <h1>Login</h1>
         <form>
-          <div><label>Email: <input type="text" /></label></div>
-          <div><label>Password: <input type="password" /></label></div>
+          <FormGroup controlId="login-email">
+            <ControlLabel>Email</ControlLabel>
+            <FormControl type="text" placeholder="Enter your email" />
+          </FormGroup>
+          <FormGroup controlId="login-password">
+            <ControlLabel>Password</ControlLabel>
+            <FormControl type="passowrd" placeholder="Enter your password" />
+          </FormGroup>
           <div><button type="button" onClick={this.loginCallback} className="btn btn-default">Submit</button></div>
         </form>
       </div>
@@ -65,9 +72,18 @@ class AuthenticationApp extends React.Component {
       <div>
         <h1>Register</h1>
         <form>
-          <div><label>Email: <input type="text" onChange={this.handleEmailChange} /></label></div>
-          <div><label>Password: <input type="password" onChange={this.handlePasswordChange} /></label></div>
-          <div><label>Re-enter Password: <input type="password" onChange={this.handlePasswordConfirmationChange} /></label></div>
+          <FormGroup controlId="register-email">
+            <ControlLabel>Email</ControlLabel>
+            <FormControl type="text" placeholder="Enter your email" onChange={this.handleEmailChange} />
+          </FormGroup>
+          <FormGroup controlId="login-password">
+            <ControlLabel>Password</ControlLabel>
+            <FormControl type="password" placeholder="Enter your desired password" onChange={this.handlePasswordChange} />
+          </FormGroup>
+          <FormGroup controlId="login-password-confirmation">
+            <ControlLabel>Confirm Password</ControlLabel>
+            <FormControl type="password" placeholder="Confirm your desired password" onChange={this.handlePasswordConfirmationChange} />
+          </FormGroup>
           <div><button type="button" onClick={this.registerCallback} className="btn btn-default">Submit</button></div>
         </form>
       </div>
