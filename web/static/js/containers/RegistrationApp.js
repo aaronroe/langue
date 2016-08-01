@@ -45,8 +45,6 @@ class RegistrationApp extends React.Component {
   componentWillReceiveProps(nextProps) {
     const { registration } = nextProps;
 
-    console.log(registration);
-
     if (registration.error !== null) {
       this.setState({validation:
         Object.assign({}, this.state.validation,

@@ -26,9 +26,7 @@ defmodule Langue.AuthController do
        new_conn
        |> put_resp_cookie("tapasha", "#{jwt}")
        |> put_resp_header("X-Expires", Integer.to_string(exp))
-       |> put_flash(:info, "you did it, dawg!")
-       |> put_view(Langue.PageView)
-       |> render("index.html")
+       |> render("show.json", api_token: jwt)
       :error ->
         conn
         |> put_status(401)

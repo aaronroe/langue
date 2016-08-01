@@ -29,8 +29,6 @@ class LoginApp extends React.Component {
     this.loginCallback = this.loginCallback.bind(this);
     this.handleEmailChange = this.handleEmailChange.bind(this);
     this.handlePasswordChange = this.handlePasswordChange.bind(this);
-
-    console.log(this.state);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -46,10 +44,11 @@ class LoginApp extends React.Component {
     }
   }
 
-  loginCallback(event) {
+  loginCallback(e) {
     const { loginUser } = this.props;
-    
+
     loginUser(this.state.email, this.state.password);
+    e.preventDefault();
   }
 
   handleEmailChange(e) {
@@ -77,7 +76,7 @@ class LoginApp extends React.Component {
             <HelpBlock>{this.state.validation.password.helpText}</HelpBlock>
             <FormControl.Feedback />
           </FormGroup>
-          <div><button type="button" onClick={this.loginCallback} className="btn btn-default">Submit</button></div>
+          <div><Button type="submit" onClick={this.loginCallback} className="btn btn-default">Submit</Button></div>
         </form>
       </div>
     );

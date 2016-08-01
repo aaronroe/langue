@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { replace } from 'react-router-redux';
 
 import Const from '../constants';
 import { startAsync, completeAsync, failAsync } from './async';
@@ -14,6 +15,8 @@ export function registerUser(email, password) {
     axios.post('/api/users', params)
       .then((resp) => {
         dispatch(completeAsync(Const.AUTHENTICATION_REGISTER_USER, email));
+
+        dispatch(replace('/login'));
       }).catch((error) => {
         dispatch(failAsync(Const.AUTHENTICATION_REGISTER_USER, email, error.response.data.errors))
       });
