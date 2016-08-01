@@ -1,7 +1,5 @@
 import React from 'react';
 
-import AuthenticationApp from './AuthenticationApp';
-
 
 export default class LangueApp extends React.Component {
   constructor(props) {
@@ -15,7 +13,7 @@ export default class LangueApp extends React.Component {
       );
     } else {
       return (
-        <AuthenticationApp />
+        <h1>You're not signed in.</h1>
       );
     }
   }

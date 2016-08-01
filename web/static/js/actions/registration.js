@@ -13,7 +13,7 @@ export function registerUser(email, password) {
       .then((resp) => {
         dispatch(completeAsync(Const.AUTHENTICATION_REGISTER_USER, email));
       }).catch((error) => {
-        dispatch(failAsync(Const.AUTHENTICATION_REGISTER_USER, email))
+        dispatch(failAsync(Const.AUTHENTICATION_REGISTER_USER, email, error.response.data.errors))
       });
   };
 }

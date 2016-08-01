@@ -24,6 +24,8 @@ import { syncHistoryWithStore } from 'react-router-redux';
 // paths "./socket" or full ones "web/static/js/socket".
 import configuredStore from './store.js';
 import LangueApp from './containers/LangueApp';
+import RegistrationApp from './containers/RegistrationApp';
+import LoginApp from './containers/LoginApp';
 
 // import socket from "./socket"
 
@@ -34,6 +36,8 @@ ReactDOM.render(
   <Provider store={store}>
     <Router history={history}>
       <Route path="/" component={LangueApp} />
+      <Route path="/register" component={RegistrationApp} />
+      <Route path="/login" component={LoginApp} />
     </Router>
   </Provider>,
   document.getElementById('langue')

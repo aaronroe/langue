@@ -12,8 +12,8 @@ export function completeAsync(name, id) {
   }
 }
 
-export function failAsync(name, id) {
+export function failAsync(name, id, errors) {
   return {
-    type: Const.ASYNC_FAIL, name, id,
+    type: Const.ASYNC_FAIL, name, id, errors,
   }
 }

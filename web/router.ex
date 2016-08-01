@@ -25,6 +25,8 @@ defmodule Langue.Router do
     pipe_through :browser # Use the default browser stack
 
     get "/", PageController, :index
+    get "/register", PageController, :index
+    get "/login", PageController, :index
   end
 
   scope "/auth", Langue do
