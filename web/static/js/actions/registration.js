@@ -9,7 +9,9 @@ export function registerUser(email, password) {
   return (dispatch) => {
     dispatch(startAsync(Const.AUTHENTICATION_REGISTER_USER, email));
 
-    axios.post('/api/users', {user: {email: email, password: password}, _csrf_token: getCSRFToken()})
+    let params = {user: {email: email, password: password}, _csrf_token: getCSRFToken()};
+
+    axios.post('/api/users', params)
       .then((resp) => {
         dispatch(completeAsync(Const.AUTHENTICATION_REGISTER_USER, email));
       }).catch((error) => {

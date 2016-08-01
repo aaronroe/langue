@@ -31,7 +31,6 @@ class RegistrationApp extends React.Component {
   constructor(props) {
     super(props);
 
-    this.loginCallback = this.loginCallback.bind(this);
     this.registerCallback = this.registerCallback.bind(this);
 
     this.handleEmailChange = this.handleEmailChange.bind(this);
@@ -46,17 +45,15 @@ class RegistrationApp extends React.Component {
   componentWillReceiveProps(nextProps) {
     const { registration } = nextProps;
 
-    if (registration.errors.email.length > 0) {
+    console.log(registration);
+
+    if (registration.error !== null) {
       this.setState({validation:
         Object.assign({}, this.state.validation,
-          {email: {validationState: 'error', helpText: 'Email ' + registration.errors.email.join(', ')}},
+          {email: {validationState: 'error', helpText: 'Email ' + registration.error}},
         )
       });
     }
-  }
-
-  loginCallback(event) {
-    alert('Login Performed');
   }
 
   registerCallback(event) {
@@ -145,19 +142,19 @@ class RegistrationApp extends React.Component {
       <div>
         <h1>Register</h1>
         <form>
-          <FormGroup controlId="register-email" validationState={this.state.validation.email.validationState}>
+          <FormGroup controlId="email" validationState={this.state.validation.email.validationState}>
             <ControlLabel>Email</ControlLabel>
             <FormControl type="text" placeholder="Enter your email" onChange={this.handleEmailChange} />
             <HelpBlock>{this.state.validation.email.helpText}</HelpBlock>
             <FormControl.Feedback />
           </FormGroup>
-          <FormGroup controlId="login-password" validationState={this.state.validation.password.validationState}>
+          <FormGroup controlId="password" validationState={this.state.validation.password.validationState}>
             <ControlLabel>Password</ControlLabel>
             <FormControl type="password" placeholder="Enter your desired password" onChange={this.handlePasswordChange} />
             <HelpBlock>{this.state.validation.password.helpText}</HelpBlock>
             <FormControl.Feedback />
           </FormGroup>
-          <FormGroup controlId="login-password-confirmation" validationState={this.state.validation.passwordConfirmation.validationState}>
+          <FormGroup controlId="password-confirmation" validationState={this.state.validation.passwordConfirmation.validationState}>
             <ControlLabel>Confirm Password</ControlLabel>
             <FormControl type="password" placeholder="Confirm your desired password" onChange={this.handlePasswordConfirmationChange} />
             <HelpBlock>{this.state.validation.passwordConfirmation.helpText}</HelpBlock>
