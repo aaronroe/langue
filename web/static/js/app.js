@@ -35,9 +35,10 @@ const history = syncHistoryWithStore(browserHistory, store);
 ReactDOM.render(
   <Provider store={store}>
     <Router history={history}>
-      <Route path="/" component={LangueApp} />
-      <Route path="/register" component={RegistrationApp} />
-      <Route path="/login" component={LoginApp} />
+      <Route path="/" component={LangueApp}>
+        <Route path="/register" component={RegistrationApp} />
+        <Route path="/login" component={LoginApp} />
+      </Route>
     </Router>
   </Provider>,
   document.getElementById('langue')
