@@ -54,11 +54,13 @@ class RegistrationApp extends React.Component {
     }
   }
 
-  registerCallback(event) {
+  registerCallback(e) {
+    e.preventDefault();
+
     const { registerUser } = this.props;
 
     if (this._registrationFormIsValid()) {
-      registerUser(this.state.email, this.state.password);
+      registerUser(e.currentTarget.email.value, e.currentTarget.password.value);
     }
   }
 
@@ -139,7 +141,7 @@ class RegistrationApp extends React.Component {
     return (
       <div>
         <h1>Register</h1>
-        <form>
+        <form onSubmit={this.registerCallback}>
           <FormGroup controlId="email" validationState={this.state.validation.email.validationState}>
             <ControlLabel>Email</ControlLabel>
             <FormControl type="text" placeholder="Enter your email" onChange={this.handleEmailChange} />
@@ -158,7 +160,7 @@ class RegistrationApp extends React.Component {
             <HelpBlock>{this.state.validation.passwordConfirmation.helpText}</HelpBlock>
             <FormControl.Feedback />
           </FormGroup>
-          <div><Button type="button" onClick={this.registerCallback} className="btn btn-default" disabled={!this._registrationFormIsValid()}>Submit</Button></div>
+          <div><Button type="submit" className="btn btn-default" disabled={!this._registrationFormIsValid()}>Submit</Button></div>
         </form>
       </div>
     );
