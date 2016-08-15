@@ -15,7 +15,7 @@ import 'phoenix_html';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import { Router, Route, browserHistory } from 'react-router';
+import { Router, Route, browserHistory, IndexRoute } from 'react-router';
 import { syncHistoryWithStore } from 'react-router-redux';
 
 // Import local files
@@ -23,6 +23,9 @@ import { syncHistoryWithStore } from 'react-router-redux';
 // Local files can be imported directly using relative
 // paths "./socket" or full ones "web/static/js/socket".
 import configuredStore from './store.js';
+
+import NavigationBar from './components/NavigationBar';
+
 import LangueApp from './containers/LangueApp';
 import RegistrationApp from './containers/RegistrationApp';
 import LoginApp from './containers/LoginApp';
@@ -35,7 +38,8 @@ const history = syncHistoryWithStore(browserHistory, store);
 ReactDOM.render(
   <Provider store={store}>
     <Router history={history}>
-      <Route path="/" component={LangueApp}>
+      <Route path="/" component={NavigationBar}>
+        <IndexRoute component={LangueApp} />
         <Route path="/register" component={RegistrationApp} />
         <Route path="/login" component={LoginApp} />
       </Route>
