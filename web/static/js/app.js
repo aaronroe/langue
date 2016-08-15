@@ -29,6 +29,7 @@ import NavigationBar from './components/NavigationBar';
 import LangueApp from './containers/LangueApp';
 import RegistrationApp from './containers/RegistrationApp';
 import LoginApp from './containers/LoginApp';
+import SessionWizard from './containers/SessionWizard';
 
 // import socket from "./socket"
 
@@ -42,6 +43,7 @@ ReactDOM.render(
         <IndexRoute component={LangueApp} />
         <Route path="/register" component={RegistrationApp} />
         <Route path="/login" component={LoginApp} />
+        <Route path="/new-session" component={SessionWizard} />
       </Route>
     </Router>
   </Provider>,

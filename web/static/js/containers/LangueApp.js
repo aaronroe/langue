@@ -1,4 +1,6 @@
 import React from 'react';
+import { Button, Glyphicon } from 'react-bootstrap';
+import { Link } from 'react-router';
 
 
 export default class LangueApp extends React.Component {
@@ -14,6 +16,11 @@ export default class LangueApp extends React.Component {
       msg = <h1>You're not signed in.</h1>;
     }
 
-    return msg;
+    return (
+      <div>
+        {msg}
+        <Link to="/new-session"><Button bsStyle="primary"><Glyphicon glyph="comment" /> New Chat Session</Button></Link>
+      </div>
+    );
   }
 }

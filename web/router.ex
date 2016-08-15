@@ -27,6 +27,7 @@ defmodule Langue.Router do
     get "/", PageController, :index
     get "/register", PageController, :index
     get "/login", PageController, :index
+    get "/new-session", PageController, :index
     get "/logout", PageController, :logout
   end
 
