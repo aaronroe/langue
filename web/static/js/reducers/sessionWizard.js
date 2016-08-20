@@ -2,6 +2,7 @@ import Const from '../constants';
 
 const defaultState = {
   sessionType: null,
+  languageChoice: null,
 };
 
 export default function sessionWizard(state = defaultState, action) {

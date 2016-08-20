@@ -1,80 +1,63 @@
 import React from 'react';
-import { Row, Col, Panel, Glyphicon } from 'react-bootstrap';
-import { Link } from 'react-router';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import { Breadcrumb } from 'react-bootstrap';
+import { routerActions } from 'react-router-redux';
 
 import Const from '../constants';
 import * as SessionWizardActionCreators from '../actions/sessionWizard';
 
 
-export default class SessionWizard extends React.Component {
+export class SessionWizard extends React.Component {
   constructor(props) {
     super(props);
+
+    this._goToChooseSessionWizard = this._goToChooseSessionWizard.bind(this);
+    this._goToExchangeWizard = this._goToExchangeWizard.bind(this);
+    this._goToPracticeWizard = this._goToPracticeWizard.bind(this);
+  }
+
+  _goToChooseSessionWizard() {
+    const { setSessionType, push } = this.props;
+    setSessionType(null);
+    push('/new-session');
+  }
+
+  _goToExchangeWizard() {
+    const { push } = this.props;
+    push('/new-session/exchange');
+  }
+
+  _goToPracticeWizard() {
+    const { push } = this.props;
+    push('/new-session/practice')
   }
 
   render() {
-    const { setSessionType } = this.props;
+    const { setSessionType, sessionType, languageChoice } = this.props;
+
+    let exchangeLanguageChoiceCrumb;
+    if (sessionType === Const.SESSION_EXCHANGE) {
+      exchangeLanguageChoiceCrumb = <Breadcrumb.Item href="/new-session/exchange" active={true}>Choose Language</Breadcrumb.Item>;
+    }
+    let practiceLanguageChoiceCrumb;
+    if (sessionType === Const.SESSION_PRACTICE) {
+      practiceLanguageChoiceCrumb = <Breadcrumb.Item href="/new-session/practice" active={true}>Choose Language</Breadcrumb.Item>;
+    }
+
     return (
       <div>
-        <SessionTypeMenu setSessionType={setSessionType}/>
+        <div style={{paddingTop: '15px'}}>
+          <Breadcrumb>
+            <Breadcrumb.Item onClick={this._goToChooseSessionWizard} active={!sessionType}>Choose Session Type</Breadcrumb.Item>
+            {exchangeLanguageChoiceCrumb}
+            {practiceLanguageChoiceCrumb}
+          </Breadcrumb>
+        </div>
+        {this.props.children}
       </div>
     );
   }
-}
-
-class SessionTypeMenu extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this._chooseLanguageExchange = this._chooseLanguageExchange.bind(this);
-    this._chooseLanguagePractice = this._chooseLanguagePractice.bind(this);
-  }
-
-  _chooseLanguageExchange() {
-    const { setSessionType } = this.props;
-    setSessionType(Const.SESSION_EXCHANGE);
-  }
-
-  _chooseLanguagePractice() {
-    const { setSessionType } = this.props;
-    setSessionType(Const.SESSION_PRACTICE);
-  }
-
-  render() {
-    return (
-      <Row>
-        <h2>Choose an Audio Chat Session Type</h2>
-        <Col xs={6}>
-          <PanelButton
-            title="Language Exchange"
-            description="You will be paired up with someone who is a native speaker in the language you are learning, and wants to learn your native language."
-            glyph="transfer"
-            onClick={this._chooseLanguageExchange}
-            />
-        </Col>
-        <Col xs={6}>
-          <PanelButton
-            title="Language Practice"
-            description="You will be paired up with someone who is learning the same language as you, and is around the same level."
-            glyph="comment"
-            onClick={this._chooseLanguagePractice}
-            />
-        </Col>
-      </Row>
-    );
-  }
-}
-
-function PanelButton(props) {
-  const { title, description, glyph, onClick } = props;
-
-  return (
-    <Panel className="clickable" onClick={onClick}>
-      <h3><Glyphicon glyph={glyph} /> {title}</h3>
-      <p>{description}</p>
-    </Panel>
-  );
 }
 
 const mapStateToProps = (state) => {
@@ -85,5 +68,5 @@ const mapStateToProps = (state) => {
 
 export default connect(
   mapStateToProps,
-  (dispatch) => bindActionCreators({...SessionWizardActionCreators}, dispatch),
+  (dispatch) => bindActionCreators({...SessionWizardActionCreators, ...routerActions}, dispatch),
 )(SessionWizard);

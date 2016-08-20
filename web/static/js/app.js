@@ -30,6 +30,10 @@ import LangueApp from './containers/LangueApp';
 import RegistrationApp from './containers/RegistrationApp';
 import LoginApp from './containers/LoginApp';
 import SessionWizard from './containers/SessionWizard';
+import ExchangeWizard from './containers/ExchangeWizard';
+import PracticeWizard from './containers/PracticeWizard';
+import SessionTypeMenu from './containers/SessionTypeMenu';
+import LanguageChoiceMenu from './containers/LanguageChoiceMenu';
 
 // import socket from "./socket"
 
@@ -41,9 +45,13 @@ ReactDOM.render(
     <Router history={history}>
       <Route path="/" component={NavigationBar}>
         <IndexRoute component={LangueApp} />
-        <Route path="/register" component={RegistrationApp} />
-        <Route path="/login" component={LoginApp} />
-        <Route path="/new-session" component={SessionWizard} />
+        <Route path="register" component={RegistrationApp} />
+        <Route path="login" component={LoginApp} />
+        <Route path="new-session" component={SessionWizard}>
+          <IndexRoute component={SessionTypeMenu} />
+          <Route path="exchange" component={ExchangeWizard} />
+          <Route path="practice" component={PracticeWizard} />
+        </Route>
       </Route>
     </Router>
   </Provider>,

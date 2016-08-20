@@ -31,6 +31,13 @@ defmodule Langue.Router do
     get "/logout", PageController, :logout
   end
 
+  scope "/new-session", Langue do
+    pipe_through :browser # Use the default browser stack
+
+    get "/exchange", PageController, :index
+    get "/practice", PageController, :index
+  end
+
   scope "/auth", Langue do
     pipe_through :browser
 
